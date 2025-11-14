@@ -13,7 +13,7 @@
   {
     "id": 2,
     "name": "스포터 릴레이",
-    "rarity": "Epic",
+    "rarity": "Uncommon",
     "image_url": "images/relay.png",
     "find_location": "군사 기지, 아크 잔해",
     "recycling_yield": [

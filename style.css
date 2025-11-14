@@ -1,9 +1,18 @@
+/* style.css 파일의 전체 내용 */
 :root {
-    /* 등급별 컬러를 CSS 변수로 정의 (JSON 등급과 일치하게) */
-    --rarity-rare: #007bff;     /* 파란색 계열 */
-    --rarity-epic: #28a745;     /* 초록색 계열 */
-    --rarity-legendary: #ffc107; /* 노란색 계열 */
-    --rarity-common: #6c757d;   /* 회색 계열 */
+    /* [수정] 5단계 레어도 및 색상 재정의 (100% Opacity) */
+    --rarity-common: #6c757d;   /* 일반: 회색 계열 */
+    --rarity-uncommon: #28a745; /* 고급: 초록색 계열 */
+    --rarity-rare: #007bff;     /* 희귀: 파란색 계열 */
+    --rarity-epic: #c43198;     /* 에픽: 보라색 계열 */
+    --rarity-legendary: #ffc107; /* 전설: 노란색 계열 */
+
+    /* [추가] Opacity 50%가 적용된 RGBa 변수 (item-row 테두리용) */
+    --rarity-common-50: rgba(108, 117, 125, 0.5);   /* Common (50%) */
+    --rarity-uncommon-50: rgba(40, 167, 69, 0.5);  /* Uncommon (50%) */
+    --rarity-rare-50: rgba(0, 123, 255, 0.5);      /* Rare (50%) */
+    --rarity-epic-50: rgba(196, 49, 152, 0.5);     /* Epic (50%) */
+    --rarity-legendary-50: rgba(255, 193, 7, 0.5); /* Legendary (50%) */
 }
 
 body {
@@ -202,10 +211,21 @@ body {
     border-radius: 5px;
     transition: background-color 0.2s;
     
+    /* [유지] item-row에 50% 투명도 레어도 색상 테두리 적용 */
+    border: 2px solid #2c2c2c; /* 기본 테두리 색상 */
+    
     /* <a> 태그 초기화 */
     text-decoration: none; 
-    color: inherit; /* 부모 요소의 폰트 색상을 상속받도록 */
+    color: inherit;
 }
+
+/* [유지] item-row에 등급별 border 색상에 50% 투명도 적용 */
+.item-row[data-rarity="Common"] { border-color: var(--rarity-common-50); }
+.item-row[data-rarity="Uncommon"] { border-color: var(--rarity-uncommon-50); }
+.item-row[data-rarity="Rare"] { border-color: var(--rarity-rare-50); }
+.item-row[data-rarity="Epic"] { border-color: var(--rarity-epic-50); }
+.item-row[data-rarity="Legendary"] { border-color: var(--rarity-legendary-50); }
+
 
 .item-row:hover {
     background-color: #3a3a3a;
@@ -215,6 +235,9 @@ body {
     display: flex;
     align-items: center;
     flex-grow: 1;
+    /* [수정] item-info에 적용된 border-left 스타일 제거 */
+    border-left: none;
+    padding-left: 0; 
 }
 
 .item-image-container {
@@ -224,16 +247,17 @@ body {
     margin-right: 15px;
     position: relative;
     overflow: hidden;
+    /* [수정] 레어도 관련 테두리 스타일을 다시 적용 */
+    border: 2px solid transparent; 
 }
 
-.item-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+/* [추가] item-image-container에 100% 투명도 레어도 테두리 다시 적용 */
+.item-info[data-rarity="Common"] .item-image-container {
+    border: 2px solid var(--rarity-common);
 }
-
-/* 등급별 좌측 테두리 색상 */
+.item-info[data-rarity="Uncommon"] .item-image-container {
+    border: 2px solid var(--rarity-uncommon); 
+}
 .item-info[data-rarity="Rare"] .item-image-container {
     border: 2px solid var(--rarity-rare);
 }
@@ -243,8 +267,13 @@ body {
 .item-info[data-rarity="Legendary"] .item-image-container {
     border: 2px solid var(--rarity-legendary);
 }
-.item-info[data-rarity="Common"] .item-image-container {
-    border: 2px solid var(--rarity-common);
+
+
+.item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 
@@ -387,11 +416,13 @@ body {
     background-color: #f0f0f0;
 }
 
-/* 레어도 레이블 색상 오버라이드 */
+/* 레어도 레이블 색상 오버라이드 (5단계 모두 포함) */
+#detail-item-rarity-label[data-rarity="Common"] { background-color: var(--rarity-common); }
+#detail-item-rarity-label[data-rarity="Uncommon"] { background-color: var(--rarity-uncommon); }
 #detail-item-rarity-label[data-rarity="Rare"] { background-color: var(--rarity-rare); }
 #detail-item-rarity-label[data-rarity="Epic"] { background-color: var(--rarity-epic); }
 #detail-item-rarity-label[data-rarity="Legendary"] { background-color: var(--rarity-legendary); }
-#detail-item-rarity-label[data-rarity="Common"] { background-color: var(--rarity-common); }
+
 
 #detail-item-name-header {
     font-size: 2em;
@@ -420,11 +451,12 @@ body {
     object-fit: contain; /* 이미지가 잘리지 않도록 */
 }
 
-/* 이미지 wrapper 레어도 테두리 */
+/* 이미지 wrapper 레어도 테두리 (5단계 모두 포함) */
+#detail-image-wrapper[data-rarity="Common"] { border-left-color: var(--rarity-common); }
+#detail-image-wrapper[data-rarity="Uncommon"] { border-left-color: var(--rarity-uncommon); }
 #detail-image-wrapper[data-rarity="Rare"] { border-left-color: var(--rarity-rare); }
 #detail-image-wrapper[data-rarity="Epic"] { border-left-color: var(--rarity-epic); }
 #detail-image-wrapper[data-rarity="Legendary"] { border-left-color: var(--rarity-legendary); }
-#detail-image-wrapper[data-rarity="Common"] { border-left-color: var(--rarity-common); }
 
 
 /* 2. 상세 정보 청크 스타일 */
