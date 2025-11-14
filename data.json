@@ -40,10 +40,19 @@
   },
   {
     "id": 5,
-    "name": "표준 연료",
+    "name": "고양이 침대",
     "rarity": "Common",
-    "image_url": "images/items/cat_bed.png.png",
+    "image_url": "images/items/cat_bed.png",
     "find_location": "주거, 상업",
+    "recycling_yield": [
+    ]
+  }
+    {
+    "id": 6,
+    "name": "커피 포트",
+    "rarity": "Common",
+    "image_url": "images/items/coffee_pot.png",
+    "find_location": "주거",
     "recycling_yield": [
     ]
   }
