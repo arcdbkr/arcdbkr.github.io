@@ -60,13 +60,15 @@ function getSampleData() {
 }
 
 
-// 3. 아이템 HTML 요소 생성 함수 (COUNT 제거됨)
+// script.js 및 itemslist.js 파일 내 createItemElement 함수
 function createItemElement(item) {
     const row = document.createElement('a');
     row.classList.add('item-row');
-    
     row.href = `detail.html?id=${item.id}`; 
     
+    // [필수] item-row (폰트 색상 상속용)
+    row.setAttribute('data-rarity', item.rarity); 
+
     row.innerHTML = `
         <div class="item-info" data-rarity="${item.rarity}">
             <div class="item-image-container">
@@ -77,7 +79,6 @@ function createItemElement(item) {
         `;
     return row;
 }
-
 // 4. 최근 아이템 표시 (유지)
 function displayRecentItems() {
     const recentListContainer = document.getElementById('recent-list');

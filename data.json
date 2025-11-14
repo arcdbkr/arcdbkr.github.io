@@ -6,19 +6,18 @@
     "image_url": "images/items/1.png", 
     "find_location": "공업 시설, 폐기물 처리장",
     "recycling_yield": [
-      { "item_name": "스포터 릴레이", "item_image": "images/relay.png", "quantity": 1 },
-      { "item_name": "금속 부품", "item_image": "images/metal.png", "quantity": 4 }
+      { "item_name": "기계 부품", "item_image": "images/items/mechanical_components.png", "quantity": 2 },
+      { "item_name": "금속 부품", "item_image": "images/items/metalparts.png", "quantity": 4 }
     ]
   },
   {
     "id": 2,
-    "name": "스포터 릴레이",
-    "rarity": "Uncommon",
-    "image_url": "images/relay.png",
-    "find_location": "군사 기지, 아크 잔해",
+    "name": "용설란",
+    "rarity": "Common",
+    "image_url": "images/items/agave.png",
+    "find_location": "자연",
     "recycling_yield": [
-      { "item_name": "전자 부품", "item_image": "images/electronic.png", "quantity": 5 },
-      { "item_name": "희귀 자성체", "item_image": "images/magnet.png", "quantity": 1 }
+      { "item_name": "잡다한 씨앗", "item_image": "images/items/jab_seeds.png", "quantity": 3 }
     ]
   },
   {
