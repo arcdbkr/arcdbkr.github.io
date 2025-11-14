@@ -3,8 +3,8 @@
     "id": 1,
     "name": "녹슨 톱니 바퀴",
     "rarity": "Rare",
-    "image_url": "images/gear.png", 
-    "count": "216",
+    "image_url": "images/items/rusted_gear.png", 
+    "count": "가공된 재료",
     "find_location": "공업 시설, 폐기물 처리장",
     "recycling_yield": [
       { "item_name": "스포터 릴레이", "item_image": "images/relay.png", "quantity": 1 },
