@@ -87,7 +87,7 @@
   {
     "id": 10,
     "name": "버섯",
-    "rarity": "Uncommon",
+    "rarity": "Common",
     "image_url": "images/items/mush.png",
     "find_location": "자연",
     "recycling_yield": [
@@ -96,7 +96,7 @@
   {
     "id": 11,
     "name": "선인장 열매",
-    "rarity": "Uncommon",
+    "rarity": "Common",
     "image_url": "images/items/prickly.png",
     "find_location": "자연",
     "recycling_yield": [
