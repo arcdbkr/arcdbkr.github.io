@@ -20,28 +20,31 @@ body {
 
 /* -- 상단 고정 영역 설정 -- */
 #fixed-top-bar {
-    position: fixed; /* 화면 상단에 고정 */
+    position: fixed;
     top: 0;
-    width: 100%; /* 너비를 화면 전체로 설정 */
-    z-index: 1000; /* 다른 요소 위에 표시되도록 우선순위 지정 */
-    background-color: #121212; /* 배경색을 설정하여 아래 내용이 비치지 않도록 함 */
+    width: 100%;
+    z-index: 1000;
+    /* [수정] 배경색을 #121212보다 살짝 밝은 #1a1a1a로 설정하여 대비 개선 */
+    background-color: #1a1a1a; 
 }
 
 /* -- 메인 콘텐츠 영역 여백 설정 -- */
+/* -- 메인 콘텐츠 영역 여백 설정 -- */
 #main-content {
-    /* 고정된 상단바의 높이(약 100px)만큼 상단 여백을 주어 내용이 가려지지 않도록 합니다. */
     padding-top: 100px;     
     max-width: 1000px;
     margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
+    /* [수정] PC 환경의 좌우 패딩을 15px로 축소 */
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 
 /* -- 1. 헤더 및 검색 스타일 -- */
 #main-header {
-    background-color: #121212; 
-    padding: 10px 20px;
+    /* [수정] 배경색을 #1a1a1a로 통일 */
+    background-color: #1a1a1a; 
+    padding: 10px 15px; /* PC 패딩 축소 */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -81,15 +84,15 @@ body {
 
 /* -- 2. 카테고리 네비게이션 스타일 -- */
 #category-nav {
-    background-color: #121212;
-    padding: 10px 20px;
+    /* [수정] 배경색을 #1a1a1a로 통일 */
+    background-color: #1a1a1a;
+    padding: 10px 15px; /* PC 패딩 축소 */
     max-width: 1000px;
     margin: 0 auto;
     display: flex;
     gap: 20px;
     border-bottom: 1px solid #333;
 }
-
 .nav-item {
     display: flex;
     align-items: center;
@@ -361,6 +364,27 @@ h3 {
 }
 
 @media (min-width: 768px) {
+    /* 모바일 환경의 좌우 패딩을 최소화하여 콘텐츠 영역 확대 */
+    #main-content {
+        padding-left: 10px; 
+        padding-right: 10px;
+    }
+    
+    /* 고정바 내부 요소의 좌우 패딩도 축소 */
+    #main-header, #category-nav {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    /* 검색창 너비 확보를 위해 로고/검색창 배치 조정 */
+    #main-header .logo-icon {
+        display: none; /* 모바일에서 로고 아이콘 숨김 (검색창 공간 확보) */
+    }
+
+    .search-container {
+        margin-left: 0; /* 좌측 여백 제거 */
+        width: 100%; /* 검색창이 전체 너비를 차지하도록 설정 */
+    }
     /* [핵심] 768px 이상일 때, 숨겨졌던 아이템을 다시 보이게 함 */
     .hidden-mobile-item {
         display: flex; 
