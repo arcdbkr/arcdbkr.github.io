@@ -1,0 +1,533 @@
+:root {
+    /* 등급별 컬러를 CSS 변수로 정의 (JSON 등급과 일치하게) */
+    --rarity-rare: #007bff;     /* 파란색 계열 */
+    --rarity-epic: #28a745;     /* 초록색 계열 */
+    --rarity-legendary: #ffc107; /* 노란색 계열 */
+    --rarity-common: #6c757d;   /* 회색 계열 */
+}
+
+body {
+    background-color: #121212; /* 완전한 블랙 대신 어두운 배경 */
+    color: #f8f8f8; /* 밝은 텍스트 */
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* -- 상단 고정 영역 설정 -- */
+#fixed-top-bar {
+    position: fixed; /* 화면 상단에 고정 */
+    top: 0;
+    width: 100%; /* 너비를 화면 전체로 설정 */
+    z-index: 1000; /* 다른 요소 위에 표시되도록 우선순위 지정 */
+    background-color: #121212; /* 배경색을 설정하여 아래 내용이 비치지 않도록 함 */
+}
+
+/* -- 메인 콘텐츠 영역 여백 설정 -- */
+#main-content {
+    /* 고정된 상단바의 높이(약 100px)만큼 상단 여백을 주어 내용이 가려지지 않도록 합니다. */
+    padding-top: 100px;     
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/* -- 1. 헤더 및 검색 스타일 -- */
+#main-header {
+    background-color: #121212; 
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333; 
+}
+
+.logo-icon {
+    font-size: 1.5em;
+    color: #ffcc00; 
+    margin-right: 10px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; 
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-left: 20px;
+}
+
+#search-input {
+    padding: 5px;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: #f8f8f8;
+    outline: none; 
+}
+
+.search-arrow {
+    font-size: 1.2em;
+    color: #555;
+    margin-left: 10px;
+}
+
+/* -- 2. 카테고리 네비게이션 스타일 -- */
+#category-nav {
+    background-color: #121212;
+    padding: 10px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #999; 
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 0;
+    transition: color 0.2s;
+}
+
+.nav-item .icon {
+    margin-right: 5px;
+    font-size: 1.2em;
+}
+
+.nav-item.active {
+    color: #fff; 
+    border-bottom: 2px solid #ffcc00; 
+}
+/* -- 3. 소개 청크 스타일 수정 -- */
+#intro-card.large-font-chunk {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 8px;
+    
+    margin-top: 40px; 
+    margin-bottom: 40px;
+
+    /* [추가] 백그라운드 이미지 설정 */
+    background-image: url('images/bg.png'); /* 이미지 파일 경로 */
+    background-size: cover; /* 이미지가 요소를 완전히 덮도록 확대/축소 */
+    background-position: center center; /* 이미지를 중앙에 배치 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    
+    /* 배경 이미지가 너무 밝다면 위에 어두운 오버레이를 추가할 수 있습니다. */
+    position: relative; /* ::before 가상 요소 사용을 위해 */
+    overflow: hidden; /* 이미지 오버레이가 밖으로 나가지 않도록 */
+}
+/* 배경 위에 어두운 오버레이를 추가하여 텍스트 가독성 높이기 */
+#intro-card.large-font-chunk::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검은색 50% 투명도 오버레이 */
+    z-index: 1; /* 콘텐츠 뒤에 오도록 */
+    border-radius: 8px; /* 부모와 동일하게 */
+}
+
+/* 콘텐츠는 오버레이 위에 오도록 z-index 설정 */
+#intro-card.large-font-chunk h2,
+#intro-card.large-font-chunk p,
+#intro-card.large-font-chunk .browse-button {
+    position: relative;
+    z-index: 2; /* 오버레이보다 위에 */
+}
+
+
+#intro-card.large-font-chunk h2 {
+    font-size: 2.5em; 
+    margin-bottom: 10px;
+    color: #ffffff; /* [수정] 배경 이미지 위에서 잘 보이도록 흰색으로 변경 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* [추가] 텍스트 그림자 */
+}
+
+#intro-card.large-font-chunk p {
+    font-size: 0.9em; 
+    line-height: 1.5;
+    color: #e0e0e0; /* [수정] 배경 이미지 위에서 잘 보이도록 밝은 색으로 변경 */
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* [추가] 텍스트 그림자 */
+}
+
+
+.browse-button {
+    background-color: #ffcc00; 
+    color: #121212;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    /* [수정] 버튼이 카드의 전체 너비를 차지하도록 설정 */
+    width: 100%; 
+    /* 버튼을 블록 요소로 만들어야 width: 100%가 적용됨 (기본 button은 인라인 요소) */
+    display: block; 
+}
+
+.browse-button:hover {
+    background-color: #ffb700;
+}
+/* -- 4. 아이템 목록 스타일 (모바일 기본: 1열) -- */
+.item-list-container {
+    /* 기본(모바일)은 1열 레이아웃 */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #2c2c2c; 
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    
+    /* <a> 태그 초기화 */
+    text-decoration: none; 
+    color: inherit; /* 부모 요소의 폰트 색상을 상속받도록 */
+}
+
+.item-row:hover {
+    background-color: #3a3a3a;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.item-image-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 등급별 좌측 테두리 색상 */
+.item-info[data-rarity="Rare"] .item-image-container {
+    border: 2px solid var(--rarity-rare);
+}
+.item-info[data-rarity="Epic"] .item-image-container {
+    border: 2px solid var(--rarity-epic);
+}
+.item-info[data-rarity="Legendary"] .item-image-container {
+    border: 2px solid var(--rarity-legendary);
+}
+.item-info[data-rarity="Common"] .item-image-container {
+    border: 2px solid var(--rarity-common);
+}
+
+
+.item-name {
+    font-weight: bold;
+}
+
+.item-count {
+    font-size: 1.2em;
+    font-weight: bold;
+    min-width: 40px; 
+    text-align: right;
+}
+/* -- 5. 푸터 (Footer) 스타일 -- */
+#main-footer {
+    background-color: #1f1f1f; /* 푸터 배경색 */
+    color: #999; /* 밝은 회색 텍스트 */
+    padding: 30px 20px;
+    margin-top: 50px; /* 메인 콘텐츠와의 간격 */
+    border-top: 1px solid #333;
+    text-align: center;
+}
+
+.footer-info {
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+.version-info {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #f8f8f8; /* 버전 정보는 더 밝게 */
+    margin-bottom: 20px;
+}
+
+.copyright-disclaimer {
+    font-size: 0.85em;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.footer-links {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* 링크 사이의 간격 */
+}
+
+.footer-links .link-item {
+    color: #999;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+.hidden-mobile-item {
+    display: none;
+}
+.footer-links .link-item:hover {
+    color: #fff;
+}
+
+.footer-links .separator {
+    color: #555; /* 구분선 색상 */
+    font-weight: normal;
+}
+
+@media (min-width: 768px) {
+    /* [핵심] 768px 이상일 때, 숨겨졌던 아이템을 다시 보이게 함 */
+    .hidden-mobile-item {
+        display: flex; 
+    }
+    
+    /* 768px 이상일 때, 3열 Grid 레이아웃 적용 */
+    #recent-list.item-list-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px; 
+    }
+    /* [수정] 최근 획득 아이템 목록(#recent-list)에만 3열 Grid 레이아웃 적용 */
+    /* 주의: 이 CSS는 JS 로직에 따라 아이템이 10개만 표시됩니다. */
+    #recent-list.item-list-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px; 
+    }
+
+    /* 검색 결과 목록(#results-list)에 3열 Grid 레이아웃 적용 (최대 30개) */
+    #results-list.item-list-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px;
+    }
+    
+    /* [수정] 세로로 길게 늘어나는 것을 방지하기 위해 height: 100% 제거 */
+    .item-row {
+        /* height: 100%; <- 이 코드를 제거합니다. */ 
+        height: auto; /* 필요하다면 auto로 명시 */
+    }
+    
+}
+/* ============================================== */
+/* 상세 정보 페이지 (detail.html) 스타일 */
+/* ============================================== */
+
+#detail-content {
+    /* 상세 페이지는 중앙 집중화를 위해 더 좁게 설정 */
+    max-width: 600px; 
+    margin: 0 auto;
+    /* 상단바 높이 고려 및 하단 여백 추가 */
+    padding: 100px 20px 50px 20px; 
+}
+
+#item-detail-card {
+    /* 전체를 감싸는 카드 */
+    border-radius: 8px;
+    overflow: hidden;
+    padding-bottom: 20px; 
+}
+
+/* 1. 이미지 및 기본 정보 영역 */
+#detail-header-container {
+    padding: 20px 20px 0 20px;
+}
+
+#detail-header-labels {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-top: 20px;
+}
+
+.header-label {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #1a1a1a; 
+    background-color: #f0f0f0;
+}
+
+/* 레어도 레이블 색상 오버라이드 */
+#detail-item-rarity-label[data-rarity="Rare"] { background-color: var(--rarity-rare); }
+#detail-item-rarity-label[data-rarity="Epic"] { background-color: var(--rarity-epic); }
+#detail-item-rarity-label[data-rarity="Legendary"] { background-color: var(--rarity-legendary); }
+#detail-item-rarity-label[data-rarity="Common"] { background-color: var(--rarity-common); }
+
+#detail-item-name-header {
+    font-size: 2em;
+    margin: 0 0 15px 0;
+    color: #f8f8f8;
+}
+
+/* 이미지 Wrapper */
+#detail-image-wrapper {
+    position: relative;
+    background-color: #2c2c2c; /* 이미지 배경 */
+    border-radius: 8px;
+    padding: 20px;
+    overflow: hidden;
+    margin: 0 20px 20px 20px;
+    
+    /* 레어도에 따른 왼쪽 코너 장식 */
+    border-left: 10px solid transparent; 
+    transition: border-left-color 0.3s;
+}
+
+#detail-item-main-image {
+    display: block;
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain; /* 이미지가 잘리지 않도록 */
+}
+
+/* 이미지 wrapper 레어도 테두리 */
+#detail-image-wrapper[data-rarity="Rare"] { border-left-color: var(--rarity-rare); }
+#detail-image-wrapper[data-rarity="Epic"] { border-left-color: var(--rarity-epic); }
+#detail-image-wrapper[data-rarity="Legendary"] { border-left-color: var(--rarity-legendary); }
+#detail-image-wrapper[data-rarity="Common"] { border-left-color: var(--rarity-common); }
+
+
+/* 2. 상세 정보 청크 스타일 */
+#item-meta-section {
+    padding: 0 20px;
+}
+
+.detail-chunk {
+    background: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.detail-chunk-title {
+    font-size: 1.2em; /* 이미지의 "구할 수 있는 곳" 제목 크기 */
+    color: #f8f8f8;
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-bottom: 0;
+}
+
+.detail-chunk p {
+    font-size: 1em;
+    color: #ccc;
+    line-height: 1.5;
+    background-color: #1a1a1a;
+    padding: 5px 0;
+}
+
+
+/* 재활용 보상 리스트 스타일 */
+.recycling-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.recycling-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+}
+
+.recycling-item-row .item-info {
+    display: flex;
+    align-items: center;
+}
+
+.recycling-item-row .item-image-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    margin-right: 10px;
+    /* 등급 테두리 재활용 */
+    border: 2px solid transparent; 
+}
+.recycling-item-row .item-count {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #f8f8f8;
+}
+
+.recycling-item-row .item-name {
+    font-weight: normal;
+}
+
+/* ============================================== */
+/* 페이지네이션 (Pagination) 스타일 추가 */
+/* ============================================== */
+
+.pagination-controls {
+    display: flex;
+    justify-content: center; /* 버튼들을 중앙에 배치 */
+    padding: 20px 0;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination-button {
+    background-color: #333;
+    color: #f8f8f8;
+    border: 1px solid #555;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination-button:hover:not(.active) {
+    background-color: #555;
+}
+
+.pagination-button.active {
+    background-color: #ffcc00; /* 활성화된 페이지는 강조 */
+    color: #121212;
+    cursor: default;
+}
+#full-list-section {
+    /* 전체 콘텐츠 상단 여백 (index.html의 #intro-card와 유사하게) */
+    margin-top: 40px; 
+    margin-bottom: 40px; /* 하단에도 여백을 추가하여 보기 좋게 만듭니다. */
+}

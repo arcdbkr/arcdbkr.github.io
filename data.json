@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "녹슨 톱니 바퀴",
+    "rarity": "Rare",
+    "image_url": "images/gear.png", 
+    "count": "216",
+    "find_location": "공업 시설, 폐기물 처리장",
+    "recycling_yield": [
+      { "item_name": "스포터 릴레이", "item_image": "images/relay.png", "quantity": 1 },
+      { "item_name": "금속 부품", "item_image": "images/metal.png", "quantity": 4 }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "스포터 릴레이",
+    "rarity": "Epic",
+    "image_url": "images/relay.png",
+    "count": 203,
+    "find_location": "군사 기지, 아크 잔해",
+    "recycling_yield": [
+      { "item_name": "전자 부품", "item_image": "images/electronic.png", "quantity": 5 },
+      { "item_name": "희귀 자성체", "item_image": "images/magnet.png", "quantity": 1 }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "가시 배",
+    "rarity": "Rare", 
+    "image_url": "images/pear.png",
+    "count": 187,
+    "find_location": "사막 지대, 황무지",
+    "recycling_yield": [
+      { "item_name": "섬유", "item_image": "images/fiber.png", "quantity": 3 }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "고대 핵",
+    "rarity": "Legendary",
+    "image_url": "images/core.png",
+    "count": 12,
+    "find_location": "아크 유적, 봉쇄 구역",
+    "recycling_yield": []
+  },
+  {
+    "id": 5,
+    "name": "표준 연료",
+    "rarity": "Common",
+    "image_url": "images/fuel.png",
+    "count": 550,
+    "find_location": "모든 지역의 컨테이너",
+    "recycling_yield": [
+      { "item_name": "화학 물질", "item_image": "images/chem.png", "quantity": 1 }
+    ]
+  }
+]

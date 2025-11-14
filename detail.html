@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">아이템 상세 정보 - ARC Raiders DB</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="fixed-top-bar">
+        <header id="main-header">
+            <div class="logo">
+                <span class="logo-icon"><img src="images/logo.png"></span> 
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="아이템 이름" onkeyup="filterItems()">
+                <span class="search-arrow">→</span> 
+            </div>
+        </header>
+
+        <nav id="category-nav">
+            <button class="nav-item active" data-filter="items">
+                <span class="icon">🛒</span> 아이템
+            </button>
+            <button class="nav-item" data-filter="arc">
+                <span class="icon">🧭</span> 아크
+            </button>
+            <button class="nav-item" data-filter="maps">
+                <span class="icon">🗺️</span> 맵
+            </button>
+        </nav>
+    </div>
+    
+    <main id="detail-content">
+        <div id="item-detail-card">
+            
+            <div id="detail-header-container">
+                <div id="detail-header-labels">
+                    <span id="detail-item-count-label" class="header-label">COUNT <span id="detail-item-count">0</span></span>
+                    <span id="detail-item-rarity-label" class="header-label" data-rarity="">RARITY</span>
+                </div>
+                
+                <h1 id="detail-item-name-header"></h1>
+            </div>
+
+            <div id="detail-image-wrapper">
+                <img id="detail-item-main-image" src="" alt="아이템 이미지">
+            </div>
+
+            <div id="item-meta-section">
+                
+                <div class="detail-chunk">
+                    <h3 class="detail-chunk-title">구할 수 있는 곳</h3>
+                    <p id="detail-find-location">정보 로드 중...</p>
+                </div>
+                
+                <div class="detail-chunk">
+                    <h3 class="detail-chunk-title">재활용 보상</h3>
+                    <div id="detail-recycling-list" class="recycling-items-list">
+                        </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </main>
+    
+    <footer id="main-footer">
+        <div class="footer-info">
+            <p class="version-info">
+                ARC Raiders DB (한국)
+            </p>
+            <p class="copyright-disclaimer">
+                본 사이트는 Embark 및 넥슨과 무관한 팬 사이트이며, 한글화 정보에 오류가 있을 수 있습니다.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#" class="link-item">오픈소스</a>
+            <span class="separator">|</span>
+            <a href="#" class="link-item">개인정보 보호정책</a>
+            <span class="separator">|</span>
+            <a href="#" class="link-item">서비스 약관</a>
+        </div>
+    </footer>
+
+    <script src="detail.js"></script> 
+</body>
+</html>
