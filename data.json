@@ -22,30 +22,29 @@
   },
   {
     "id": 3,
-    "name": "가시 배",
-    "rarity": "Rare", 
-    "image_url": "images/pear.png",
-    "find_location": "사막 지대, 황무지",
+    "name": "살구",
+    "rarity": "Common", 
+    "image_url": "images/items/apricot.png",
+    "find_location": "자연",
     "recycling_yield": [
-      { "item_name": "섬유", "item_image": "images/fiber.png", "quantity": 3 }
+      { "item_name": "잡다한 씨앗", "item_image":  "images/items/jab_seeds.png", "quantity": 3 }
     ]
   },
   {
     "id": 4,
-    "name": "고대 핵",
-    "rarity": "Legendary",
-    "image_url": "images/core.png",
-    "find_location": "아크 유적, 봉쇄 구역",
+    "name": "잡다한 씨앗",
+    "rarity": "Common",
+    "image_url": "images/items/jab_seeds.png",
+    "find_location": "자연, 꼬꼬",
     "recycling_yield": []
   },
   {
     "id": 5,
     "name": "표준 연료",
     "rarity": "Common",
-    "image_url": "images/fuel.png",
-    "find_location": "모든 지역의 컨테이너",
+    "image_url": "images/items/cat_bed.png.png",
+    "find_location": "주거, 상업",
     "recycling_yield": [
-      { "item_name": "화학 물질", "item_image": "images/chem.png", "quantity": 1 }
     ]
   }
 ]
