@@ -510,7 +510,23 @@ max-width: 600px;
 #detail-image-wrapper[data-rarity="Epic"] { border-left-color: var(--rarity-epic); }
 #detail-image-wrapper[data-rarity="Legendary"] { border-left-color: var(--rarity-legendary); }
 
-
+#detail-find-location {
+    font-size: 0.9em; /* 이전에 0.9em로 줄임 */
+    color: #ccc;
+    line-height: 1.4; 
+    
+    /* recycling-item-row와 유사한 배경색 적용 */
+    background-color: #2c2c2c; 
+    
+    /* item-row 스타일처럼 테두리를 둥글게 */
+    border-radius: 5px; 
+    
+    /* recycling-item-row와 유사하게 내부 패딩 적용 */
+    padding: 8px 15px; 
+    
+    /* p 태그의 기본 마진 제거 */
+    margin: 0; 
+}
 /* 2. 상세 정보 청크 스타일 */
 #item-meta-section {
     padding: 0 20px;
@@ -523,7 +539,7 @@ max-width: 600px;
 }
 
 .detail-chunk-title {
-    font-size: 1.2em; /* 이미지의 "구할 수 있는 곳" 제목 크기 */
+    font-size: 1.0em; /* 이미지의 "구할 수 있는 곳" 제목 크기 */
     color: #f8f8f8;
     margin-top: 0;
     margin-bottom: 10px;
