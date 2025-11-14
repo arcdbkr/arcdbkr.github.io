@@ -83,5 +83,14 @@
     "find_location": "전기",
     "recycling_yield": [
     ]
+  },
+  {
+    "id": 10,
+    "name": "버섯",
+    "rarity": "Uncommon",
+    "image_url": "images/items/light_bulb.png",
+    "find_location": "자연",
+    "recycling_yield": [
+    ]
   }
 ]
