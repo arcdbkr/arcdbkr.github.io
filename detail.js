@@ -102,25 +102,33 @@ async function loadData() {
 }
 
 // 상세 정보를 화면에 그리는 함수
+// 상세 정보를 화면에 그리는 함수 (수정됨)
 function renderItemDetail(item) {
-    // 1. 페이지 타이틀 업데이트
+    // 1. 페이지 타이틀 업데이트 (유지)
     document.getElementById('page-title').textContent = `${item.name} 상세 정보 - ARC Raiders DB`;
     
-    // 2. 헤더 및 기본 정보 업데이트
-    document.getElementById('detail-item-count').textContent = item.count;
+    // 2. 헤더 및 기본 정보 업데이트 (COUNT 관련 제거)
     
-    // [수정] COUNT 레이블에도 data-rarity를 설정
-    const countLabel = document.getElementById('detail-item-count-label');
-    countLabel.setAttribute('data-rarity', item.rarity); 
+    // [제거] count를 설정하는 로직 제거
+    // document.getElementById('detail-item-count').textContent = item.count;
+    
+    // [제거] COUNT 레이블 설정 로직 제거
+    const headerLabels = document.getElementById('detail-header-labels');
+    // COUNT 레이블만 제거하기 위해 innerHTML을 사용하여 COUNT 레이블을 제외한 나머지 요소만 재구성하거나
+    // 부모 요소에서 직접 제거해야 합니다.
+
+    // detail.html 구조를 기준으로, detail-item-count-label를 통째로 제거하거나 숨깁니다.
+    const countLabelElement = document.getElementById('detail-item-count-label');
+    if(countLabelElement) {
+        countLabelElement.remove(); // DOM에서 COUNT 레이블 요소 제거
+    }
     
     document.getElementById('detail-item-rarity-label').textContent = item.rarity.toUpperCase();
     document.getElementById('detail-item-rarity-label').setAttribute('data-rarity', item.rarity); 
     document.getElementById('detail-item-name-header').textContent = item.name;
     document.getElementById('detail-item-main-image').src = item.image_url;
     
-    // 이미지 섹션에 등급별 코너 색상 적용을 위해 data-rarity 속성을 추가합니다.
     document.getElementById('detail-image-wrapper').setAttribute('data-rarity', item.rarity);
-    
     // 3. 획득처 정보 업데이트
     document.getElementById('detail-find-location').textContent = item.find_location || '획득처 정보 없음';
     

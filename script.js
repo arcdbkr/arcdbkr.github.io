@@ -20,31 +20,21 @@ async function loadData() {
 // 2. 샘플 데이터 (data.json 파일이 없거나 로드에 실패했을 경우를 위한 임시 데이터)
 function getSampleData() {
     return [
-    { "id": 1, "name": "녹슨 톱니 바퀴", "rarity": "Rare", "image_url": "images/gear.png", "count": 216, "find_location": "공업 시설, 폐기물 처리장", "recycling_yield": "금속 부품 x4, 기계 부품 x2" },
-          { "id": 2, "name": "스포터 릴레이", "rarity": "Epic", "image_url": "images/relay.png", "count": 203, "find_location": "군사 기지, 아크 잔해", "recycling_yield": "전자 부품 x5, 희귀 자성체 x1" },
-          { "id": 3, "name": "가시 배", "rarity": "Rare", "image_url": "images/pear.png", "count": 187, "find_location": "사막 지대, 황무지", "recycling_yield": "섬유 x3" },
-          { "id": 4, "name": "고대 핵", "rarity": "Legendary", "image_url": "images/core.png", "count": 12, "find_location": "아크 유적, 봉쇄 구역", "recycling_yield": "알 수 없음" },
-          { "id": 5, "name": "표준 연료", "rarity": "Common", "image_url": "images/fuel.png", "count": 550, "find_location": "모든 지역의 컨테이너", "recycling_yield": "화학 물질 x1" },
-          { "id": 6, "name": "양자 칩", "rarity": "Epic", "image_url": "images/chip.png", "count": 98, "find_location": "테크니컬 구역, 연구 시설", "recycling_yield": "전자 부품 x3" },
-          { "id": 7, "name": "수리 키트", "rarity": "Common", "image_url": "images/kit.png", "count": 75, "find_location": "생존자 캠프", "recycling_yield": "섬유 x2" },
-          { "id": 8, "name": "플라즈마 코일", "rarity": "Legendary", "image_url": "images/coil.png", "count": 5, "find_location": "보스 드랍, 고위험 지역", "recycling_yield": "에너지 셀 x5" },
-          { "id": 9, "name": "폐금속", "rarity": "Common", "image_url": "images/scrap.png", "count": 999, "find_location": "모든 지역의 파편", "recycling_yield": "금속 부품 x1" },
-          { "id": 10, "name": "안정기", "rarity": "Rare", "image_url": "images/stab.png", "count": 45, "find_location": "정비소, 공업 시설", "recycling_yield": "기계 부품 x3" },
-          { "id": 11, "name": "하이퍼 연료", "rarity": "Legendary", "image_url": "images/hfuel.png", "count": 2, "find_location": "고위험 지역의 비밀 상자", "recycling_yield": "화학 물질 x5" }
+    { "id": 1, "name": "녹슨 톱니 바퀴", "rarity": "Rare", "image_url": "images/gear.png", "find_location": "공업 시설, 폐기물 처리장", "recycling_yield": "금속 부품 x4, 기계 부품 x2" },
+          { "id": 2, "name": "스포터 릴레이", "rarity": "Epic", "image_url": "images/relay.png", "find_location": "군사 기지, 아크 잔해", "recycling_yield": "전자 부품 x5, 희귀 자성체 x1" },
+          { "id": 3, "name": "가시 배", "rarity": "Rare", "image_url": "images/pear.png", "find_location": "사막 지대, 황무지", "recycling_yield": "섬유 x3" },
+          { "id": 4, "name": "고대 핵", "rarity": "Legendary", "image_url": "images/core.png", "find_location": "아크 유적, 봉쇄 구역", "recycling_yield": "알 수 없음" },
+          { "id": 5, "name": "표준 연료", "rarity": "Common", "image_url": "images/fuel.png", "find_location": "모든 지역의 컨테이너", "recycling_yield": "화학 물질 x1" },
+           { "id": 21, "name": "파손된 툴킷", "rarity": "Common", "image_url": "images/kit.png", "find_location": "작업장", "recycling_yield": "금속 부품 x1" }
           ];
 }
-
-
-// 3. 아이템 HTML 요소 생성 함수
+// 3. 아이템 HTML 요소 생성 함수 (수정됨)
 function createItemElement(item) {
-    // [수정] <a> 태그를 사용하여 클릭 시 상세 페이지로 이동하도록 변경
     const row = document.createElement('a');
     row.classList.add('item-row');
     
-    // 상세 페이지 링크 설정
     row.href = `detail.html?id=${item.id}`; 
     
-    // 등급 컬러 적용을 위한 데이터 속성 사용
     row.innerHTML = `
         <div class="item-info" data-rarity="${item.rarity}">
             <div class="item-image-container">
@@ -52,8 +42,7 @@ function createItemElement(item) {
             </div>
             <span class="item-name">${item.name}</span>
         </div>
-        <span class="item-count">${item.count}</span>
-    `;
+        `;
     return row;
 }
 
