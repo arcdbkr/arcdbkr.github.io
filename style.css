@@ -99,7 +99,7 @@ body {
     background: none;
     border: none;
     color: #999; 
-    font-size: 0.8em;
+    font-size: 0.9em;
     font-weight: bold;
     cursor: pointer;
     padding: 5px 0;
@@ -364,6 +364,14 @@ h3 {
 }
 
 @media (min-width: 768px) {
+    /* [추가] detail-content의 좌우 패딩을 최소화하여 공간 확대 */
+    #detail-content {
+        /* 상단 패딩은 유지하고 좌우 패딩을 10px로 축소 */
+        padding-top: 100px;
+        padding-left: 10px; 
+        padding-right: 10px;
+        padding-bottom: 50px;
+    }
     /* 모바일 환경의 좌우 패딩을 최소화하여 콘텐츠 영역 확대 */
     #main-content {
         padding-left: 10px; 
@@ -424,10 +432,10 @@ h3 {
 
 #detail-content {
     /* 상세 페이지는 중앙 집중화를 위해 더 좁게 설정 */
-    max-width: 600px; 
+max-width: 600px; 
     margin: 0 auto;
-    /* 상단바 높이 고려 및 하단 여백 추가 */
-    padding: 100px 20px 50px 20px; 
+    /* 상단바 높이 고려 및 하단 여백 추가 (패딩은 PC 뷰에서 20px 유지) */
+    padding: 100px 20px 50px 20px;
 }
 
 #item-detail-card {
