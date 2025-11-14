@@ -41,7 +41,7 @@
   {
     "id": 5,
     "name": "고양이 침대",
-    "rarity": "Common",
+    "rarity": "Uncommon",
     "image_url": "images/items/cat_bed.png",
     "find_location": "주거, 상업",
     "recycling_yield": [
@@ -54,6 +54,25 @@
     "image_url": "images/items/coffee_pot.png",
     "find_location": "주거",
     "recycling_yield": [
+    ]
+  },
+  {
+    "id": 7,
+    "name": "빈 와인병",
+    "rarity": "Common",
+    "image_url": "images/items/wine.png",
+    "find_location": "주거, 상업",
+    "recycling_yield": [
+    ]
+  },
+  {
+    "id": 8,
+    "name": "레몬",
+    "rarity": "Common",
+    "image_url": "images/items/lemmon.png",
+    "find_location": "주거, 상업",
+    "recycling_yield": [
+      { "item_name": "잡다한 씨앗", "item_image":  "images/items/jab_seeds.png", "quantity": 3 }
     ]
   }
 ]
