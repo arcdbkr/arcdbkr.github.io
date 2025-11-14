@@ -2,7 +2,7 @@ let allItems = [];
 const ITEMS_PER_PAGE = 20; 
 let currentPage = 1;       
 
-// [수정] 5단계 레어도 영문 키를 한글 이름으로 변환하는 맵
+// [유지] 5단계 레어도 영문 키를 한글 이름으로 변환하는 맵
 const rarityNameMap = {
     'Common': '일반',
     'Uncommon': '고급',
@@ -35,7 +35,7 @@ async function loadData() {
 // 2. 샘플 데이터 (5단계 레어도 및 COUNT 제거됨)
 function getSampleData() {
     return [
-    { "id": 1, "name": "녹슨 톱니 바퀴", "rarity": "Uncommon", "image_url": "images/items/1.png", "find_location": "공업 시설, 폐기물 처리장", "recycling_yield": "금속 부품 x4, 기계 부품 x2" },
+    { "id": 1, "name": "녹슨 톱니 바퀴", "rarity": "Uncommon", "image_url": "images/gear.png", "find_location": "공업 시설, 폐기물 처리장", "recycling_yield": "금속 부품 x4, 기계 부품 x2" },
           { "id": 2, "name": "스포터 릴레이", "rarity": "Rare", "image_url": "images/relay.png", "find_location": "군사 기지, 아크 잔해", "recycling_yield": "전자 부품 x5, 희귀 자성체 x1" },
           { "id": 3, "name": "가시 배", "rarity": "Uncommon", "image_url": "images/pear.png", "find_location": "사막 지대, 황무지", "recycling_yield": "섬유 x3" },
           { "id": 4, "name": "고대 핵", "rarity": "Legendary", "image_url": "images/core.png", "find_location": "아크 유적, 봉쇄 구역", "recycling_yield": "알 수 없음" },
@@ -60,13 +60,14 @@ function getSampleData() {
 }
 
 
-// script.js 및 itemslist.js 파일 내 createItemElement 함수
+// 3. 아이템 HTML 요소 생성 함수 (data-rarity 속성 추가됨)
 function createItemElement(item) {
     const row = document.createElement('a');
     row.classList.add('item-row');
+    
     row.href = `detail.html?id=${item.id}`; 
     
-    // [필수] item-row (폰트 색상 상속용)
+    // [⭐ 수정] item-row (<a> 태그)에 data-rarity 속성을 추가합니다. (폰트/테두리 색상 적용용)
     row.setAttribute('data-rarity', item.rarity); 
 
     row.innerHTML = `
@@ -79,11 +80,14 @@ function createItemElement(item) {
         `;
     return row;
 }
-// 4. 최근 아이템 표시 (유지)
+
+// 4. 최근 아이템 표시 (역순 정렬 적용)
 function displayRecentItems() {
     const recentListContainer = document.getElementById('recent-list');
     
-    const recentItems = allItems.slice(0, 30); 
+    // [⭐ 수정] allItems 배열을 복사하여 역순으로 정렬한 후, 30개만 가져옵니다.
+    const reversedItems = [...allItems].reverse(); 
+    const recentItems = reversedItems.slice(0, 30); 
     
     recentListContainer.innerHTML = ''; 
     if (recentItems.length === 0) {
