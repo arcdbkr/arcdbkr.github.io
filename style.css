@@ -89,13 +89,15 @@ body {
 
 /* -- 2. 카테고리 네비게이션 스타일 -- */
 #category-nav {
-    /* [수정] 배경색을 #1a1a1a로 통일 */
+    /* [유지] 배경색을 #1a1a1a로 통일 */
     background-color: #1a1a1a;
     padding-bottom: 10px;
     padding-left: 15px;
     padding-top: 5px;
-    max-width: 1000px;
-    margin: 0 auto;
+    
+    /* [수정] max-width: 1000px; 제거 */
+    /* [수정] margin: 0 auto; 제거 */
+    
     display: flex;
     gap: 20px;
     border-bottom: 1px solid #333;
@@ -740,7 +742,7 @@ max-width: 600px;
     /* [추가] 텍스트 내용물 자체도 왼쪽 정렬을 보장 */
     text-align: left !important;
 }
-
+ 
 .recycling-image-container img {
     width: 100%;
     height: 100%;
