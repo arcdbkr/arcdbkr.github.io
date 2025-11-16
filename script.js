@@ -48,22 +48,19 @@ function getSampleData() {
 function createItemElement(item) {
     const row = document.createElement('a');
     row.classList.add('item-row');
+    
     row.href = `detail.html?id=${item.id}`; 
     
     // [⭐ 필수 유지] item-row (테두리/폰트색용)
     row.setAttribute('data-rarity', item.rarity); 
 
     row.innerHTML = `
-        <div class="item-image-container" data-rarity="${item.rarity}">
-            <img src="${item.image_url}" alt="${item.name}" class="item-image">
-        </div>
-
-        <div class="item-info"> 
+        <div class="item-info" data-rarity="${item.rarity}">  <div class="item-image-container">  <img src="${item.image_url}" alt="${item.name}" class="item-image">
+            </div>
             <span class="item-name">${item.name}</span>
-            ${item.used ? `<span class="item-used-subtitle">사용처: ${item.used}</span>` : ''}
+            ${item.used ? `<span class="item-used-subtitle">${item.used}</span>` : ''}
         </div>
-        
-        `;
+    `;
     return row;
 }
 
