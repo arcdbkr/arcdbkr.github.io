@@ -44,23 +44,27 @@ function getSampleData() {
     ];
 }
 
-// 3. 아이템 HTML 요소 생성 함수 (data-rarity 속성 설정 필수)
+// script.js 및 itemslist.js 파일 내
+// 3. 아이템 HTML 요소 생성 함수 (레이아웃 재구성)
 function createItemElement(item) {
     const row = document.createElement('a');
     row.classList.add('item-row');
-    
     row.href = `detail.html?id=${item.id}`; 
     
-    // [⭐ 필수 유지] item-row (테두리/폰트색용)
+    // [유지] item-row (테두리/폰트색용)
     row.setAttribute('data-rarity', item.rarity); 
 
     row.innerHTML = `
-        <div class="item-info" data-rarity="${item.rarity}">  <div class="item-image-container">  <img src="${item.image_url}" alt="${item.name}" class="item-image">
-            </div>
-            <span class="item-name">${item.name}</span>
-            ${item.used ? `<span class="item-used-subtitle">${item.used}</span>` : ''}
+        <div class="item-image-container" data-rarity="${item.rarity}"> 
+            <img src="${item.image_url}" alt="${item.name}" class="item-image">
         </div>
-    `;
+
+        <div class="item-info"> 
+            <span class="item-name">${item.name}</span>
+            ${item.used ? `<span class="item-used-subtitle">사용처: ${item.used}</span>` : ''}
+        </div>
+        
+        `;
     return row;
 }
 
