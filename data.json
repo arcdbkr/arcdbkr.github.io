@@ -138,4 +138,17 @@
     ],
     "used": "작업장 업그레이드"
   }
+  ,
+  {
+    "id": 14,
+    "name": "와스프 드라이버",
+    "rarity": "Rare",
+    "image_url": "images/items/wasp_driver.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "아크 합금", "item_image": "images/items/arc_alloy.png", "quantity": 2 },
+      { "item_name": "전기 부품", "item_image": "images/items/electrical_components.png", "quantity": 4 }
+    ],
+    "used": "작업장 업그레이드"
+  }
 ]
