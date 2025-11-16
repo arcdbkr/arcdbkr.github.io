@@ -8,7 +8,8 @@
     "recycling_yield": [
       { "item_name": "기계 부품", "item_image": "images/items/mechanical_components.png", "quantity": 2 },
       { "item_name": "금속 부품", "item_image": "images/items/metalparts.png", "quantity": 4 }
-    ]
+    ],
+    "used": "작업장"
   },
   {
     "id": 2,
@@ -18,7 +19,8 @@
     "find_location": "자연",
     "recycling_yield": [
       { "item_name": "잡다한 씨앗", "item_image": "images/items/jab_seeds.png", "quantity": 3 }
-    ]
+    ],
+    "used": "판매 및 재활용"
   },
   {
     "id": 3,
@@ -28,7 +30,8 @@
     "find_location": "자연",
     "recycling_yield": [
       { "item_name": "잡다한 씨앗", "item_image":  "images/items/jab_seeds.png", "quantity": 3 }
-    ]
+    ],
+    "used": "꼬꼬"
   },
   {
     "id": 4,
@@ -36,7 +39,8 @@
     "rarity": "Common",
     "image_url": "images/items/jab_seeds.png",
     "find_location": "자연, 꼬꼬",
-    "recycling_yield": []
+    "recycling_yield": [],
+    "used": "상인"
   },
   {
     "id": 5,
@@ -45,7 +49,8 @@
     "image_url": "images/items/cat_bed.png",
     "find_location": "주거, 상업",
     "recycling_yield": [
-    ]
+    ],
+    "used": "꼬꼬"
   },
   {
     "id": 6,
@@ -54,7 +59,8 @@
     "image_url": "images/items/coffee_pot.png",
     "find_location": "주거",
     "recycling_yield": [
-    ]
+    ],
+    "used": "판매 및 재활용"
   },
   {
     "id": 7,
@@ -63,7 +69,8 @@
     "image_url": "images/items/wine.png",
     "find_location": "주거, 상업",
     "recycling_yield": [
-    ]
+    ],
+    "used": "판매 및 재활용"
   },
   {
     "id": 8,
@@ -73,7 +80,8 @@
     "find_location": "주거, 상업",
     "recycling_yield": [
       { "item_name": "잡다한 씨앗", "item_image":  "images/items/jab_seeds.png", "quantity": 3 }
-    ]
+    ],
+    "used": "꼬꼬"
   },
   {
     "id": 9,
@@ -82,7 +90,8 @@
     "image_url": "images/items/light_bulb.png",
     "find_location": "전기",
     "recycling_yield": [
-    ]
+    ],
+    "used": "프로젝트"
   },
   {
     "id": 10,
@@ -91,7 +100,8 @@
     "image_url": "images/items/mush.png",
     "find_location": "자연",
     "recycling_yield": [
-    ]
+    ],
+    "used": "꼬꼬"
   },
   {
     "id": 11,
@@ -100,6 +110,7 @@
     "image_url": "images/items/prickly.png",
     "find_location": "자연",
     "recycling_yield": [
-    ]
+    ],
+    "used": "꼬꼬"
   }
 ]

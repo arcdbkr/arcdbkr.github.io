@@ -17,7 +17,7 @@ function getKoreanRarityName(englishRarity) {
     return rarityNameMap[englishRarity] || englishRarity;
 }
 
-// [복원] 샘플 데이터 (detail.js 용 - 5단계 레어도 및 COUNT 제거됨)
+// [복원/수정] 샘플 데이터 (detail.js 용 - used 필드 추가)
 function getSampleData() {
     return [
       {
@@ -29,7 +29,8 @@ function getSampleData() {
         "recycling_yield": [
           { "item_name": "스포터 릴레이", "item_image": "images/relay.png", "quantity": 1 },
           { "item_name": "금속 부품", "item_image": "images/metal.png", "quantity": 4 }
-        ]
+        ],
+        "used": "작업장" // [추가] 사용처
       },
       {
         "id": 2,
@@ -40,7 +41,8 @@ function getSampleData() {
         "recycling_yield": [
           { "item_name": "전자 부품", "item_image": "images/electronic.png", "quantity": 5 },
           { "item_name": "희귀 자성체", "item_image": "images/magnet.png", "quantity": 1 }
-        ]
+        ],
+        "used": "프로젝트" // [추가]
       },
       {
         "id": 3,
@@ -50,7 +52,8 @@ function getSampleData() {
         "find_location": "사막 지대, 황무지",
         "recycling_yield": [
           { "item_name": "섬유", "item_image": "images/fiber.png", "quantity": 3 }
-        ]
+        ],
+        "used": "꼬꼬" // [추가]
       },
       {
         "id": 4,
@@ -58,7 +61,8 @@ function getSampleData() {
         "rarity": "Legendary",
         "image_url": "images/core.png",
         "find_location": "아크 유적, 봉쇄 구역",
-        "recycling_yield": []
+        "recycling_yield": [],
+        "used": "판매 및 분해" // [추가]
       },
       {
         "id": 5,
@@ -68,7 +72,8 @@ function getSampleData() {
         "find_location": "모든 지역의 컨테이너",
         "recycling_yield": [
           { "item_name": "화학 물질", "item_image": "images/chem.png", "quantity": 1 }
-        ]
+        ],
+        "used": "판매 및 분해" // [추가]
       }
     ];
 }
@@ -81,7 +86,13 @@ async function findItemById(id) {
         const data = await response.json(); 
         
         const item = data.find(i => i.id === parseInt(id));
-        return item || getSampleData().find(i => i.id === parseInt(id));
+        
+        // [수정] data.json에서 찾지 못하면 샘플 데이터에서 찾도록 로직 변경
+        if (item) {
+            return item;
+        } else {
+            return getSampleData().find(i => i.id === parseInt(id));
+        }
 
     } catch (error) {
         console.error("아이템 데이터 로드 실패. 샘플 데이터를 사용합니다.", error);
@@ -91,22 +102,35 @@ async function findItemById(id) {
 
 // 상세 정보를 화면에 그리는 함수
 function renderItemDetail(item) {
+    const rarityLabel = document.getElementById('detail-item-rarity-label'); // 희귀도 태그
+    const usedLabel = document.getElementById('detail-used-label');         // [추가] 사용처 태그
+
     // 1. 페이지 타이틀 업데이트
     document.getElementById('page-title').textContent = `${item.name} 상세 정보 - ARC Raiders DB`;
     
     // 2. 헤더 및 기본 정보 업데이트
-    // [수정] 레어도 이름을 한글 변환 함수 사용
-    document.getElementById('detail-item-rarity-label').textContent = getKoreanRarityName(item.rarity);
-    document.getElementById('detail-item-rarity-label').setAttribute('data-rarity', item.rarity); 
     document.getElementById('detail-item-name-header').textContent = item.name;
     document.getElementById('detail-item-main-image').src = item.image_url;
+    
+    // 희귀도 표시
+    rarityLabel.textContent = getKoreanRarityName(item.rarity);
+    rarityLabel.setAttribute('data-rarity', item.rarity); 
+    
+    // [추가] 사용처 표시 (희귀도와 동일 스타일)
+    if (item.used) {
+        usedLabel.textContent = item.used;
+        usedLabel.setAttribute('data-rarity', item.rarity); // 희귀도와 같은 색상 적용
+        usedLabel.style.display = 'inline-block'; // 숨김 해제
+    } else {
+        usedLabel.style.display = 'none'; // 데이터 없으면 숨김
+    }
     
     document.getElementById('detail-image-wrapper').setAttribute('data-rarity', item.rarity);
     
     // 3. 획득처 정보 업데이트
     document.getElementById('detail-find-location').textContent = item.find_location || '획득처 정보 없음';
     
-    // 4. 재활용 목록 업데이트
+    // 4. 재활용 목록 업데이트 (로직 유지)
     const recyclingList = document.getElementById('detail-recycling-list');
     recyclingList.innerHTML = '';
     
