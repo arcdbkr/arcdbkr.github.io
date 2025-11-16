@@ -679,3 +679,56 @@ max-width: 600px;
     font-style: italic;
     line-height: 1.2;
 }
+
+/* [추가] 재활용 목록 아이템 정보 컨테이너 스타일 */
+.recycling-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 개수를 오른쪽 끝으로 밀어냅니다. */
+    padding: 8px 15px;
+    background-color: #2c2c2c;
+    border-radius: 5px;
+}
+
+.recycling-image-container {
+    width: 30px; /* 크기 조정 */
+    height: 30px;
+    border-radius: 4px;
+    /* [수정] 이미지와 이름 사이 간격 조정 */
+    margin-right: 10px; 
+    position: relative;
+    overflow: hidden;
+    /* 레어도 테두리 */
+    border: 2px solid transparent; 
+}
+.recycling-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.recycling-item-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* 이름이 최대한 확장되도록 */
+}
+
+.recycling-item-name {
+    font-weight: normal;
+    color: #f8f8f8;
+}
+
+.recycling-item-count {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #f8f8f8;
+    text-align: right;
+    width: 40px; /* 개수 표시 영역 너비 고정 */
+}
+
+/* [추가] 재활용 목록 레어도 테두리 (recycling-image-container에 적용) */
+.recycling-image-container[data-rarity="Common"] { border-color: var(--rarity-common); }
+.recycling-image-container[data-rarity="Uncommon"] { border-color: var(--rarity-uncommon); }
+.recycling-image-container[data-rarity="Rare"] { border-color: var(--rarity-rare); }
+.recycling-image-container[data-rarity="Epic"] { border-color: var(--rarity-epic); }
+.recycling-image-container[data-rarity="Legendary"] { border-color: var(--rarity-legendary); }
