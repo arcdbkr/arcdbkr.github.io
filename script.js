@@ -61,7 +61,7 @@ function createItemElement(item) {
 
         <div class="item-info"> 
             <span class="item-name">${item.name}</span>
-            ${item.used ? `<span class="item-used-subtitle">사용처: ${item.used}</span>` : ''}
+            ${item.used ? `<span class="item-used-subtitle">${item.used}</span>` : ''}
         </div>
         
         `;
