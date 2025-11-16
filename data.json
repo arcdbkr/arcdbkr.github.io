@@ -106,7 +106,7 @@
   {
     "id": 11,
     "name": "선인장 열매",
-    "rarity": "Common",
+    "rarity": "Uncommon",
     "image_url": "images/items/prickly.png",
     "find_location": "자연",
     "recycling_yield": [

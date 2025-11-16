@@ -1,5 +1,5 @@
 let allItems = []; 
-const ITEMS_PER_PAGE = 20; 
+const ITEMS_PER_PAGE = 10; 
 let currentPage = 1;       
 
 // [유지] 5단계 레어도 영문 키를 한글 이름으로 변환하는 맵
