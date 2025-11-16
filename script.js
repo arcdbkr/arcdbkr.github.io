@@ -58,7 +58,6 @@ function createItemElement(item) {
         <div class="item-info" data-rarity="${item.rarity}">  <div class="item-image-container">  <img src="${item.image_url}" alt="${item.name}" class="item-image">
             </div>
             <span class="item-name">${item.name}</span>
-            <span class="item-rarity">${getKoreanRarityName(item.rarity)}</span>
             ${item.used ? `<span class="item-used-subtitle">${item.used}</span>` : ''}
         </div>
     `;
