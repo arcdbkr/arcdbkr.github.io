@@ -147,7 +147,20 @@
     "find_location": "공업",
     "recycling_yield": [
       { "item_name": "아크 합금", "item_image": "images/items/arc_alloy.png", "quantity": 2 },
-      { "item_name": "전기 부품", "item_image": "images/items/electrical_components.png", "quantity": 4 }
+      { "item_name": "전기 부품", "item_image": "images/items/electrical_components.png", "quantity": 2 }
+    ],
+    "used": "작업장 업그레이드"
+  }
+  ,
+  {
+    "id": 15,
+    "name": "고급 기계 부품",
+    "rarity": "Rare",
+    "image_url": "images/items/advanced_mechanical_components.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "강철 스프링", "item_image": "images/items/steel_spring.png", "quantity": 2 },
+      { "item_name": "기계 부품", "item_image": "images/items/mechanical_components.png", "quantity": 2 }
     ],
     "used": "작업장 업그레이드"
   }
