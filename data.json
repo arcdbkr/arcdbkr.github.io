@@ -9,7 +9,7 @@
       { "item_name": "기계 부품", "item_image": "images/items/mechanical_components.png", "quantity": 2 },
       { "item_name": "금속 부품", "item_image": "images/items/metalparts.png", "quantity": 4 }
     ],
-    "used": "작업장"
+    "used": "작업장 업그레이드"
   },
   {
     "id": 2,
@@ -31,16 +31,16 @@
     "recycling_yield": [
       { "item_name": "잡다한 씨앗", "item_image":  "images/items/jab_seeds.png", "quantity": 3 }
     ],
-    "used": "꼬꼬"
+    "used": "꼬꼬 업그레이드"
   },
   {
     "id": 4,
     "name": "잡다한 씨앗",
     "rarity": "Common",
     "image_url": "images/items/jab_seeds.png",
-    "find_location": "자연, 꼬꼬",
+    "find_location": "자연, 꼬꼬 업그레이드",
     "recycling_yield": [],
-    "used": "상인"
+    "used": "상인 교환"
   },
   {
     "id": 5,
@@ -50,7 +50,7 @@
     "find_location": "주거, 상업",
     "recycling_yield": [
     ],
-    "used": "꼬꼬"
+    "used": "꼬꼬 업그레이드"
   },
   {
     "id": 6,
@@ -81,7 +81,7 @@
     "recycling_yield": [
       { "item_name": "잡다한 씨앗", "item_image":  "images/items/jab_seeds.png", "quantity": 3 }
     ],
-    "used": "꼬꼬"
+    "used": "꼬꼬 업그레이드"
   },
   {
     "id": 9,
@@ -101,7 +101,7 @@
     "find_location": "자연",
     "recycling_yield": [
     ],
-    "used": "꼬꼬"
+    "used": "꼬꼬 업그레이드"
   },
   {
     "id": 11,
@@ -111,6 +111,31 @@
     "find_location": "자연",
     "recycling_yield": [
     ],
-    "used": "꼬꼬"
+    "used": "꼬꼬 업그레이드"
+  },
+  {
+    "id": 12,
+    "name": "기계 부품",
+    "rarity": "Common",
+    "image_url": "images/items/mechanical_components.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "고무 부품", "item_image": "images/items/rubber_parts.png", "quantity": 2 },
+      { "item_name": "금속 부품", "item_image": "images/items/metalparts.png", "quantity": 4 }
+    ],
+    "used": "작업장 업그레이드"
+  }
+  ,
+  {
+    "id": 13,
+    "name": "녹슨 도구",
+    "rarity": "Rare",
+    "image_url": "images/items/rusted_tools.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "기계 부품", "item_image": "images/items/mechanical_components.png", "quantity": 2 },
+      { "item_name": "강철 스프링", "item_image": "images/items/steel_spring.png", "quantity": 4 }
+    ],
+    "used": "작업장 업그레이드"
   }
 ]
