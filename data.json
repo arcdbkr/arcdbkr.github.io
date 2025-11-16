@@ -164,4 +164,30 @@
     ],
     "used": "작업장 업그레이드"
   }
+  ,
+  {
+    "id": 15,
+    "name": "센티넬 발사 코어",
+    "rarity": "Rare",
+    "image_url": "images/items/sentinel_firing_core.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "아크 합금", "item_image": "images/items/arc_alloy.png", "quantity": 2 },
+      { "item_name": "기계 부품", "item_image": "images/items/mechanical_components.png", "quantity": 3 }
+    ],
+    "used": "작업장 업그레이드"
+  }
+  ,
+  {
+    "id": 16,
+    "name": "전기 부품",
+    "rarity": "Common",
+    "image_url": "images/items/electrical_components.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "플라스틱 부품", "item_image": "images/items/plastic_parts.png", "quantity": 3 },
+      { "item_name": "고무 부품", "item_image": "images/items/rubber_parts.png", "quantity": 3 }
+    ],
+    "used": "작업장 업그레이드"
+  }
 ]
