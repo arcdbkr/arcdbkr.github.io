@@ -181,12 +181,24 @@
   {
     "id": 16,
     "name": "전기 부품",
-    "rarity": "Common",
+    "rarity": "Uncommon",
     "image_url": "images/items/electrical_components.png",
     "find_location": "공업",
     "recycling_yield": [
       { "item_name": "플라스틱 부품", "item_image": "images/items/plastic_parts.png", "quantity": 3 },
       { "item_name": "고무 부품", "item_image": "images/items/rubber_parts.png", "quantity": 3 }
+    ],
+    "used": "작업장 업그레이드"
+  }
+  ,
+  {
+    "id": 16,
+    "name": "전원 케이블",
+    "rarity": "Rare",
+    "image_url": "images/items/power_cable.png",
+    "find_location": "공업",
+    "recycling_yield": [
+      { "item_name": "전선", "item_image": "images/items/wires.png", "quantity": 4 }
     ],
     "used": "작업장 업그레이드"
   }

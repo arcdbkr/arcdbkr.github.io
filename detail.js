@@ -17,6 +17,19 @@ function getKoreanRarityName(englishRarity) {
     return rarityNameMap[englishRarity] || englishRarity;
 }
 
+// [추가] 레어도를 조회하기 위한 전체 아이템 목록과 조회 맵
+let allItems = []; 
+let rarityLookupMap = {};
+
+function buildRarityLookupMap(items) {
+    const map = {};
+    if (!items) return map;
+    items.forEach(item => {
+        map[item.name] = item.rarity; // 아이템 이름 -> 레어도 매핑
+    });
+    return map;
+}
+
 // [복원/수정] 샘플 데이터 (detail.js 용 - used 필드 추가)
 function getSampleData() {
     return [
@@ -27,8 +40,8 @@ function getSampleData() {
         "image_url": "images/items/rusted_gear.png", 
         "find_location": "공업 시설, 폐기물 처리장",
         "recycling_yield": [
-          { "item_name": "스포터 릴레이", "item_image": "images/relay.png", "quantity": 1, "rarity": "Rare" }, // 레어도 추가
-          { "item_name": "금속 부품", "item_image": "images/metal.png", "quantity": 4, "rarity": "Common" } // 레어도 추가
+          { "item_name": "스포터 릴레이", "item_image": "images/relay.png", "quantity": 1 }, 
+          { "item_name": "금속 부품", "item_image": "images/metal.png", "quantity": 4 } 
         ],
         "used": "작업장"
       },
@@ -39,8 +52,8 @@ function getSampleData() {
         "image_url": "images/relay.png",
         "find_location": "군사 기지, 아크 잔해",
         "recycling_yield": [
-          { "item_name": "전자 부품", "item_image": "images/electronic.png", "quantity": 5, "rarity": "Uncommon" },
-          { "item_name": "희귀 자성체", "item_image": "images/magnet.png", "quantity": 1, "rarity": "Epic" }
+          { "item_name": "전자 부품", "item_image": "images/electronic.png", "quantity": 5 },
+          { "item_name": "희귀 자성체", "item_image": "images/magnet.png", "quantity": 1 }
         ],
         "used": "프로젝트"
       },
@@ -51,7 +64,7 @@ function getSampleData() {
         "image_url": "images/pear.png",
         "find_location": "사막 지대, 황무지",
         "recycling_yield": [
-          { "item_name": "섬유", "item_image": "images/fiber.png", "quantity": 3, "rarity": "Common" }
+          { "item_name": "섬유", "item_image": "images/fiber.png", "quantity": 3 }
         ],
         "used": "꼬꼬"
       },
@@ -71,7 +84,7 @@ function getSampleData() {
         "image_url": "images/fuel.png",
         "find_location": "모든 지역의 컨테이너",
         "recycling_yield": [
-          { "item_name": "화학 물질", "item_image": "images/chem.png", "quantity": 1, "rarity": "Common" }
+          { "item_name": "화학 물질", "item_image": "images/chem.png", "quantity": 1 }
         ],
         "used": "판매 및 분해"
       }
@@ -79,31 +92,30 @@ function getSampleData() {
 }
 
 
-// 아이템 ID로 데이터를 찾는 함수
-async function findItemById(id) {
+// 아이템 ID로 데이터를 찾는 함수 (전체 데이터 로드 로직 추가)
+async function findItemById(itemId) {
+    let dataFromJSON;
     try {
         const response = await fetch('./data.json');
-        const data = await response.json(); 
-        
-        const item = data.find(i => i.id === parseInt(id));
-        
-        // [수정] data.json에서 찾지 못하면 샘플 데이터에서 찾도록 로직 변경
-        if (item) {
-            return item;
-        } else {
-            return getSampleData().find(i => i.id === parseInt(id));
-        }
-
-    } catch (error) {
-        console.error("아이템 데이터 로드 실패. 샘플 데이터를 사용합니다.", error);
-        return getSampleData().find(i => i.id === parseInt(id));
+        dataFromJSON = await response.json();
+    } catch (e) {
+        console.error("JSON load error, using sample data only.", e);
+        dataFromJSON = [];
     }
+
+    // 2. 전체 데이터를 합치고 조회 맵을 빌드합니다.
+    const combinedData = [...dataFromJSON, ...getSampleData()];
+    allItems = combinedData;
+    rarityLookupMap = buildRarityLookupMap(allItems); 
+
+    // 3. 요청된 아이템을 찾습니다.
+    return allItems.find(i => String(i.id) === itemId);
 }
 
 // 상세 정보를 화면에 그리는 함수
 function renderItemDetail(item) {
-    const rarityLabel = document.getElementById('detail-item-rarity-label'); // 희귀도 태그
-    const usedLabel = document.getElementById('detail-used-label');         // 사용처 태그
+    const rarityLabel = document.getElementById('detail-item-rarity-label');
+    const usedLabel = document.getElementById('detail-used-label');
 
     // 1. 페이지 타이틀 업데이트
     document.getElementById('page-title').textContent = `${item.name} 상세 정보 - ARC Raiders DB`;
@@ -116,13 +128,13 @@ function renderItemDetail(item) {
     rarityLabel.textContent = getKoreanRarityName(item.rarity);
     rarityLabel.setAttribute('data-rarity', item.rarity); 
     
-    // [추가] 사용처 표시 (희귀도와 동일 스타일)
+    // 사용처 표시
     if (item.used) {
         usedLabel.textContent = item.used;
-        usedLabel.setAttribute('data-rarity', item.rarity); // 희귀도와 같은 색상 적용
-        usedLabel.style.display = 'inline-block'; // 숨김 해제
+        usedLabel.setAttribute('data-rarity', item.rarity); 
+        usedLabel.style.display = 'inline-block';
     } else {
-        usedLabel.style.display = 'none'; // 데이터 없으면 숨김
+        usedLabel.style.display = 'none';
     }
     
     document.getElementById('detail-image-wrapper').setAttribute('data-rarity', item.rarity);
@@ -130,31 +142,33 @@ function renderItemDetail(item) {
     // 3. 획득처 정보 업데이트
     document.getElementById('detail-find-location').textContent = item.find_location || '획득처 정보 없음';
     
-    // 4. 재활용 목록 업데이트 (로직 수정)
+    // 4. 재활용 목록 업데이트 (수정됨)
     const recyclingList = document.getElementById('detail-recycling-list');
     recyclingList.innerHTML = '';
     
     let yields = item.recycling_yield;
     
-    // 재활용 보상 데이터에 임의의 레어도 키를 추가해야 합니다. (샘플 데이터에 추가)
     if (yields && yields.length > 0) {
         yields.forEach(yieldItem => {
+            // [수정] 아이템 이름으로 레어도를 조회합니다.
+            const yieldRarity = rarityLookupMap[yieldItem.item_name] || 'Common';
+            
             const yieldElement = document.createElement('div');
             yieldElement.classList.add('recycling-item-row');
             
             // [추가] 재활용 보상에도 레어도 속성을 설정
-            yieldElement.setAttribute('data-rarity', yieldItem.rarity || 'Common'); 
+            yieldElement.setAttribute('data-rarity', yieldRarity); 
             
+            // [수정] 이미지, 이름, 개수 구조 변경 및 레어도 속성 적용
             yieldElement.innerHTML = `
-                <div class="recycling-image-container" data-rarity="${yieldItem.rarity || 'Common'}">
-                    <img src="${yieldItem.item_image}" class="item-image">
+                <div class="recycling-image-container" data-rarity="${yieldRarity}">
+                    <img src="${yieldItem.item_image}" alt="${yieldItem.item_name}" class="item-image">
                 </div>
                 
-                <div class="recycling-item-info">
-                    <span class="recycling-item-name">${yieldItem.item_name}</span>
+                <div class="recycling-text-wrapper">
+                    <span class="recycling-item-name" data-rarity="${yieldRarity}">${yieldItem.item_name}</span>
+                    <span class="recycling-item-quantity">${yieldItem.quantity}</span>
                 </div>
-                
-                <span class="recycling-item-count">${yieldItem.quantity}</span>
             `;
             recyclingList.appendChild(yieldElement);
         });
