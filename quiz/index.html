@@ -36,7 +36,7 @@
         .status-bar {
             background-color: #e3f2fd;
             color: #1565c0;
-            
+            padding: 10px 20px;
             font-size: 14px;
             font-weight: bold;
             border-bottom: 1px solid #bbdefb;
@@ -751,7 +751,7 @@
 
         window.onload = function() {
             parseData();
-            document.getElementById('counterArea').innerText = `현재 힌트 등록중: ${parsedData.length}개`;
+            document.getElementById('counterArea').innerText = `등록된 힌트 수: ${parsedData.length}개`;
             renderTable(parsedData);
             document.getElementById('searchInput').addEventListener('input', filterData);
             document.getElementById('searchInput').addEventListener('keypress', function(e) {
