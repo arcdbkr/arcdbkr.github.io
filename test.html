@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수수께끼 정답 찾기</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* 상단 카운터 */
+        .status-bar {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-bottom: 1px solid #bbdefb;
+            text-align: center;
+        }
+
+        /* 검색 영역 */
+        .search-area {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+        }
+        .search-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #333;
+        }
+        .search-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        .search-box {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+        
+        /* 파란색 찾기 버튼 (장식용 & 리셋 기능 겸용) */
+        .search-btn {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .search-btn:hover {
+            background-color: #1565c0;
+        }
+
+        .reset-link {
+            display: block;
+            text-align: right;
+            font-size: 12px;
+            color: #1e88e5;
+            margin-bottom: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .reset-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 테이블 영역 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        th {
+            background-color: #f1f1f1;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            width: 50%;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        tr:hover {
+            background-color: #f9fbfc;
+        }
+        /* 검색어 하이라이트 */
+        .highlight {
+            background-color: #fff176;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="status-bar" id="counterArea">
+            힌트 등록중: 로딩중...
+        </div>
+
+        <div class="search-area">
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="background-color: #eee; padding: 12px 15px; font-weight: bold; border: 1px solid #ccc; border-right: none; border-radius: 4px 0 0 4px;">찾다</div>
+                <input type="text" id="searchInput" class="search-box" style="border-radius: 0 4px 4px 0;" placeholder="검색어를 입력하세요 (힌트 또는 정답)">
+            </div>
+            
+            <a href="#" class="reset-link" onclick="resetSearch()">Reset search criteria</a>
+            <button class="search-btn" onclick="filterData()">찾 다</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>단서 (힌트)</th>
+                    <th>가능한 답변</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        // ---------------------------------------------------------
+        // 여기에 데이터를 입력합니다. (줄바꿈으로 구분)
+        // ---------------------------------------------------------
+        const rawData = `
+100일 - 백일초
+5월에 피는 꽃 - 모란
+7월7일, 오작교 - 직녀
+가금류 - 수탉
+가금류 - 수탉, 오리
+가금류 - 오리
+가마 - 도자기 
+가마꾼 - 가마
+가시 - 복어
+가시 - 장미
+가시 - 찔레꽃
+가전제품-다리미
+가죽 - 채찍
+간식 = 땅콩
+감전- 전기뱀장어
+강 - 하마
+강과 하천 - 메기
+강한부리 - 딱따구리
+강한향기-히아신스
+개구리 - 올챙이
+개똥벌레 - 반딧불이
+거대한 활엽수-느릅나무
+거대함 - 코끼리
+거대함-코끼리
+건강 - 인삼
+검은 깃털-칠면조
+검은반점무늬 - 표범
+겨울간식 - 고구마
+겨울간식-고구마
+겨울에피는꽃 - 매화
+견과류 - 땅콩
+고독 - 파초
+고래 - 참치
+고무줄 - 새총
+고삐 - 승마
+고양이 - 삵
+고추 - 잠자리
+고흐 - 해바라기
+곡물 - 밀
+곤충채집 - 잠자리
+곰 - 판다
+곱슬털 - 푸들
+공 - 축구
+공기 정화 - 행운목
+공주-인어
+과녁 - 양궁
+관상용 - 분재
+관상용 꽃 - 작약꽃
+교통수단 - 가마
+교활함- 여우
+교활함,야행성 - 여우
+구름 - 솜사탕
+구멍,채소,녹색줄기 - 샐러리
+구미호 - 여우
+구슬 - 진주
+구애 - 공작
+굽은 날 - 낫
+귀 - 토끼
+귀한 약재-석곡
+그늘 - 오동나무
+그물모양 무늬 - 멜론
+그물모양무늬 - 멜론
+작은곡물 - 녹두
+또아리 - 뱀
+근육 - 캥거루
+근접무기 - 단검
+금속 - 자물쇠
+기도 - 양초
+기름 - 올리브
+긴 귀 - 당나귀
+긴 꼬리 - 쥐
+긴 다리, 달리기, 날지 못하는  - 타조
+긴 송곳니-바다코끼리
+긴 주둥이 - 땃쥐
+긴 혀 - 기린
+긴다리 - 타조
+목돌리기 - 올빼미 
+가시 - 복어
+성벽 - 만리장성
+긴주둥이 - 땃쥐
+길조 - 까치
+깔때기 - 카라꽃
+깔때기 - 카라꽃
+씨앗 - 수박 씨앗
+동화 - 파랑새
+꼬리 - 돼지
+꼬리비늘 - 인어
+꼬리-영장류 - 원숭이
+꽃 - 수선화
+꽃 - 수선화, 나비
+꽃가루 - 꿀벌
+꽃가루 - 포플러
+꽃이 없음 - 무화과
+꽃차 - 자스민
+나르키소스 - 수선화
+나무 - 벵골보리수
+나무구멍 - 딱딱구리
+나무껍질 - 계피
+나무-딱따구리
+나뭇잎 - 단풍나무
+나팔 모양 - 주정홍
+나팔모양- 주정홍
+낚시줄 - 낚싯대
+날카로운 이빨 - 상어
+날카로움-검
+남극, 무리생활 - 팽귄
+남장 - 뮬란
+냄새 - 은행
+냄새먹는 - 하마
+넓은 잎 - 파초
+원예 - 분재
+방귀 - 스컹크
+넓적한 부리 - 오리너구리
+노란 종이 - 부적
+노란깃털 - 꾀꼬리
+노란색 - 옥수수
+노란색 과실 - 비파
+노란색 과일 - 살구
+노래 소리 - 꾀꼬리
+녹색 눈 - 파리
+녹색잎 - 회양목
+녹색줄기-샐러리
+놀이공원-솜사탕
+놀이터 - 숨바꼭질
+농기구 - 갈퀴
+농기구 -갈퀴
+높은 지능 - 돌고래
+눈동자 - 공작
+눈망울 - 꽃사슴
+눈망울 - 사슴
+눈사람 - 오뚝이
+뉴턴 - 사과
+느림 - 거북이
+다도 - 차
+다이어트 - 토마토
+단단함-느릅나무
+단맛 약재, 귀한 약재 - 석곡
+단맛나는약재 - 감초
+쌀로만든 제과 - 송편
+단풍 - 은행
+달리기 - 타조
+달콤함 - 멜론
+담벼락,빨판같은 뿌리 - 담쟁이덩굴
+대머리-흰머리수리
+댐 검설 - 비버
+덩굴 - 자등
+덩굴식물 - 나팔꽃
+덩굴식물 - 장춘화
+데낄라 - 용설란
+데킬라-용설란
+도자기 - 그릇
+독성 - 협죽도
+독침 - 벌
+동물 - 낙타
+동틀 무렵- 수탉
+동화 - 파란색
+되새김질 - 소
+둥근 뿔 - 양
+들판 - 차전초
+등 푸른 생선 - 꽁치
+딜레마 - 고슴도치
+딱딱 vs 말랑 - 복숭아
+땅굴 - 두더지
+땅굴, 퇴화한 - 두더지
+떡 - 송편
+라따뚜이 - 가지
+말,고삐 - 승마
+말린 과일 - 쌀
+말미잘 - 흰동가리
+매듭 - 중국 매듭
+매복- 악어
+매운 향 - 마늘종
+매운맛 - 양파
+맥주 - 밀
+맹금류 - 독수리
+머리를 검게함 한약재 -  폴리고눔 멀티플로룸
+머리카락-빗
+멸종위기-삵
+명중-양궁
+모내기 - 벼
+모르모트 - 기니피그
+모르모트,앞니  - 기니피그
+모이 - 닭
+목 - 기린
+목돌리기 - 올빼미
+목재 - 탁자
+목-목걸이
+무기 - 검
+무기-활
+무리생활 - 펭귄
+물가, 나르키소스, 꽃 - 수선화
+물고기 떼 - 낚시 그물
+물고기 - 복어
+물돼지- 카피바라
+미끌미끌 - 미꾸라지
+미끼 - 낚시
+민물고기-미꾸라지
+민속놀이 - 투호
+밀림의 청소부 - 하이에나
+밀크티 - 토란
+바다 - 고래
+바다 - 낚시 그물
+바다 - 진주
+바람 - 풍경
+바람-풍경
+바위 - 이끼
+바지 - 허리띠
+바지, 혁띠 - 허리띠
+반려동물- 개
+발굽 - 말
+발톱-나무늘보
+밤송이, 딜레마 - 고슴도치
+방어-갑옷
+방어구-부적
+방충 효과 - 녹나무
+방충 효과-곽향
+배달 - 우체국
+버드나무-포플러
+변색 - 카멜레온
+변치 않은 사랑 - 백일초
+병사 - 창
+보류 - 칸델라
+보름달-토끼
+보석-팔찌,목걸이
+보양-인삼
+보온 - 부츠
+보일러 - 귀뚜라미
+보호 - 갑옷
+복숭아 - 복숭아꽃
+복슬복슬 털 - 알파카
+볶음 - 표고버섯
+봄 - 벚꽃
+봄 - 베고니아
+봄 - 비파
+봄에 피는 하얀 꽃-살구
+부귀영화 - 두꺼비
+부채꼴 - 은행
+분수-고래
+분홍색 -작약꽃
+붉은살-연어
+붉은색 과실 - 자두
+붉은색 과일 - 체리
+붉은색 꽃 - 주정홍
+붉은색 벼슬-수탉
+붉은색과일 - 체리
+비수 - 단검
+비타민C - 귤
+비타민C - 레몬
+빛나는 벌레 - 반딧불이
+빠른 속도 - 지네
+빠름 - 치타
+빨간 과육 - 수박
+빨간색 - 도장
+빨간색 - 원숭이, 도장
+빨판 - 오징어
+빨판같은 뿌리-담쟁이덩굴
+빨판-오징어
+뻐꾹뻐꾹 - 뻐꾸기
+뽀빠이 - 시금치
+뿌리 - 감초
+뿌리 - 뱅골보리수
+뿌리채소 - 감자
+뿌리채소 - 토란
+사각형-상자
+사격-활
+사계절,여름,꽃 - 장춘화
+사군자 - 매화
+사냥 - 활
+사람을 찢어 - 곰
+사랑 - 장미
+사막 - 전갈
+사바나 - 기린
+사슴 - 꽃사슴
+산타클로스 - 순록
+살구 - 살구꽃
+상록수 - 소나무
+상록수 - 회양목
+상록수-소나무
+새 - 파랑새
+새벽-닭
+새콤달콤 - 자두
+생선 - 고양이
+생태계교란 - 황소개구리
+서명 - 도장
+성벽 - 만리장성
+세균 전파 - 파리
+손 씻기 - 너구리
+손 씻지 - 너구리
+손톱 같은 새싹 - 정향
+손톱 물들이기, 여름에 피는 꽃 - 봉선화
+수면 - 침대
+수분가득 - 배
+수분보충 - 오이
+수생식물 - 연근
+수중생활 - 수달
+수컷 임신 - 해마
+수확 - 밀
+술 - 술주전자
+술래-숨바꼭질
+스포츠 - 축구
+습기 -이끼
+습지-버드나무
+습한곳 - 지네
+시끄러움 - 귀뚜라미
+시력 보호 - 블루베리
+시베리아 - 허스키
+매달림 - 나무늘보
+가을- 오동나무
+여름 철새 - 꾀꼬리
+영리함 - 푸들
+시원한 - 수조
+시원함 - 수박
+시체먹는새 - 독수리
+식물 - 분재
+식이섬유 - 고구마
+식칼 - 도마
+신거 - 레몬
+신맛-레몬
+신선한향기 -쑥갓
+실내장식 - 꽃병
+쌀 저장 - 쌀 항아리
+썰매 - 순록
+쑥 - 쑥갓
+쓰레기통 - 파리
+씨앗 - 수박 씨앗
+아침식사 - 오트밀
+알 - 거북이
+앞니 - 기니피그
+야생동물 - 삵
+야행성 - 여우
+약용 -감초
+약재 - 곽향
+약재 - 작약꽃
+양 몰이- 웰시코기
+양념 - 고추
+양서류 - 개구리
+어업 - 가마우지
+어업 - 생선 바구니
+어획-낚시 그물
+엉덩이 - 웰시코기
+에메랄드 그린 - 물 시금치
+여름 - 나팔꽃, 풍경
+여름 - 무궁화
+여름 과일 - 수박
+여름 상큼함 차가움 과일 - 상추 
+여름밤 - 불꽃놀이
+여름-백일초
+여름철새 - 꾀꼬리
+연꽃 - 연근
+연회 - 술주전자
+열대 - 파초
+열대우림 - 오랑우탄
+열대-파초
+열렬한 - 잭프루프 
+영양 풍부 - 콜리플라
+영양공급 - 구기자
+영화 - 흰동가리
+영화 캐릭터 - 흰동가리
+영화의 제목 - 피라냐
+온라인 모임 - 생선 바구니
+올림픽 - 양궁
+요리 - 도마
+용맹함 - 진돗개
+우산모양의 - 영지버섯
+울타리 - 나팔꽃
+월드컵 - 축구
+유인원 - 오랑우탄
+육상동물 - 치타
+은하수 - 견우
+의자 - 그네
+이종 교배 - 노새
+인내- 용설란
+일꾼 이미지 - 비버
+일꾼, 여왕, 부지런함 - 개미
+일본 - 벚꽃
+일본 나라 - 꽃사슴
+자르기 - 가위
+작은 배추 - 청경채
+잡초 - 자전초
+장마철-수련
+장식 - 중국 매듭
+재생 - 불가사리
+재생-불가사리
+전분 - 감자
+전통음식 - 송편
+전투복 - 갑옷
+점프 - 캥거루
+정돈 - 빗
+정돈-빗      
+제주도 - 귤
+젤리 - 고양이
+조명-칸델라
+조미료 - 간장
+조미료 - 설탕
+조미료-간장
+조화 - 음양
+종이 - 가위
+주름제거 - 다리미
+주머니-캥거루
+라마-알파카
+주방 - 도마
+주방- 도마
+주방용품 - 그릇
+주황색 - 당근
+주황색/붉은 어쩌구 꽃 - 능소화
+줄기채소 - 마늘종
+중국, 영국 - 차
+중독- 담배
+지독한 냄새 - 두리안
+지식 - 책
+짐꾼 - 당나귀
+짐꾼 - 노새
+집사 - 고양이
+차가운 - 수조
+채소 - 렌즈콩
+채소 - 청경채
+채소 (자주빛 검은색) - 가지
+채소밭 - 샐러리
+천하장사 - 씨름
+청량함-박하
+청수 - 수조
+청혼 - 장미
+초밥 - 연어
+초식동물 - 얼룩말
+초원 - 말
+추석 - 송편
+추수감사절,터키 - 칠면조
+추어탕-미꾸라지
+축제 - 벚꽃
+축제 - 불꽃놀이
+취미 - 낚시
+취미, 미끼 - 낚시
+치즈 - 쥐
+침 뱉기 - 알파카
+침엽수 - 측백나무
+커다란 고양이 - 표범
+커다란 나무 - 버드나무
+코- 코끼리
+코크링  
+콩과 - 잠두
+큰 귀- 비글
+큰 입 - 하마
+큰 입자- 콩
+클레오 파트라 - 무화과 
+탁란 뻐꾸기
+탈 - 가면
+탐욕의 상징 - 하이에나
+태양 - 해바라기
+터키 - 칠면조
+털 깍기 - 양
+토끼 - 당근
+토양 - 지렁이
+토종 - 진돗개
+퇴화한 눈 - 두더지
+파충류 - 카멜레온
+판다 - 죽순
+팝콘 - 옥수수
+패션 - 목걸이
+편지 배달 - 비둘기
+편지-우체국
+푸른 꽃 - 로즈마리
+푸른 등 - 고등어
+푸른 잎 - 고수
+푸른 잎 - 박하
+푸른 잎 - 박하, 고수
+푸른 활엽수 녹나무
+피넛버터 - 땅콩
+필드 - 쑥갓
+핑크색 꽃잎 - 베고니아
+하얀 꽃 - 살구
+한국 - 무궁화
+항산화 - 블루베리
+해달 - 수달
+해안 - 가마우지
+해열, 해독 - 차전초
+행운 - 행운목
+향기 - 측백나무
+헌 집 - 두꺼비
+현물 상환 지급 - 렌즈콩
+현물 상환 지불 - 렌즈콩 
+호불호 - 고수
+호수공원, 가금류 - 오리
+호수공원-오리
+혼례 - 가마
+화려한깃털 - 앵무새
+화려함 - 불꽃놀이
+활발함 - 비글
+활발함-비글
+회 - 광어
+휘아킨토스 - 히아신스
+흔들흔들 - 그네
+흙을 풀어주다 - 갈퀴
+과일의 왕-두리안
+흔들흔들-그네
+흰 꽃 모양, 영양 풍부 - 콜리플라워
+흰 꽃 모양-콜리플라워
+흰색 꽃 - 카라꽃
+흰색 솜털 - 포플러
+힘 - 씨름
+`;
+
+        // 데이터 파싱 함수
+        let parsedData = [];
+
+        function parseData() {
+            const lines = rawData.trim().split('\n');
+            lines.forEach(line => {
+                line = line.trim();
+                if (!line) return;
+
+                let delimiter = '-';
+                if (line.includes('=')) delimiter = '=';
+                else if (line.includes('-')) delimiter = '-';
+                else {
+                    // 구분자가 없으면 전체를 힌트로 간주하거나 무시
+                    // 여기서는 힌트만 있는 경우로 처리
+                    parsedData.push({ hint: line, answer: '' });
+                    return;
+                }
+
+                // 첫 번째 구분자를 기준으로 나눔
+                const parts = line.split(delimiter);
+                const hint = parts[0].trim();
+                const answer = parts.slice(1).join(delimiter).trim(); // 뒤에 -가 또 있을 경우 대비
+
+                if (hint) {
+                    parsedData.push({ hint, answer });
+                }
+            });
+        }
+
+        // 테이블 렌더링 함수
+        function renderTable(data, keyword = '') {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="2">결과가 없습니다.</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                
+                // 검색어 하이라이트 처리
+                let displayHint = item.hint;
+                let displayAnswer = item.answer;
+
+                if (keyword) {
+                    const regex = new RegExp(`(${keyword})`, 'gi');
+                    displayHint = displayHint.replace(regex, '<span class="highlight">$1</span>');
+                    displayAnswer = displayAnswer.replace(regex, '<span class="highlight">$1</span>');
+                }
+
+                tr.innerHTML = `
+                    <td>${displayHint}</td>
+                    <td>${displayAnswer}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 검색 필터링 함수
+        function filterData() {
+            const input = document.getElementById('searchInput');
+            const keyword = input.value.trim().toLowerCase();
+
+            // 검색어가 없으면 전체 보여주기 (혹은 빈 화면을 원하면 [] 전달)
+            if (!keyword) {
+                renderTable(parsedData);
+                return;
+            }
+
+            const filtered = parsedData.filter(item => {
+                return item.hint.toLowerCase().includes(keyword) || 
+                       item.answer.toLowerCase().includes(keyword);
+            });
+
+            renderTable(filtered, keyword);
+        }
+
+        // 초기화 함수
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            renderTable(parsedData);
+            document.getElementById('searchInput').focus();
+        }
+
+        // 초기 실행
+        window.onload = function() {
+            parseData();
+            
+            // 카운터 업데이트
+            const counterDiv = document.getElementById('counterArea');
+            counterDiv.innerText = `현재 힌트 등록중: ${parsedData.length}개`;
+
+            // 전체 데이터 렌더링
+            renderTable(parsedData);
+
+            // 검색창 입력 이벤트 리스너 (실시간 검색)
+            document.getElementById('searchInput').addEventListener('input', filterData);
+            
+            // 엔터키 이벤트
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    filterData();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
